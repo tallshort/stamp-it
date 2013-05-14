@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Label xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 color.passed="#009600" color.failed="#C80000" currentState="failed" text="{data.toString() + '%'}">
+	<s:states>
+		<s:State name="failed"/>
+		<s:State name="passed"/>
+	</s:states>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			
+			private var _data:int;
+			
+			[Bindable]
+			public function set data(value:int):void {
+				this._data = value;
+				if (value >= 60) {
+					this.currentState = "passed";
+				} else {
+					this.currentState = "failed";
+				}
+			}
+			
+			public function get data():int {
+				return this._data;
+			}
+		]]>
+	</fx:Script>
+</s:Label>

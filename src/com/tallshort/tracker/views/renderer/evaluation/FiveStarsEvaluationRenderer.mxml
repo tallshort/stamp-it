@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import spark.components.Button;
+			
+			private var _data:int = -1;
+			
+			[Bindable]
+			public function set data(value:int):void {
+				this._data = value;
+				for (var i:int = 0; i < 5; i++) {
+					var button:Button = this.getElementAt(i) as Button;
+					if (i < value) {
+						button.label = "*";
+					} else {
+						button.label = "_";
+					}
+				}
+			}
+			
+			public function get data():int {
+				return this._data;
+			}
+		]]>
+	</fx:Script>
+	<s:Button></s:Button>
+	<s:Button></s:Button>
+	<s:Button></s:Button>
+	<s:Button></s:Button>
+	<s:Button></s:Button>
+</s:HGroup>

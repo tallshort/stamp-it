@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				autoDrawBackground="false" currentState="normal" mouseDown="itemrenderer1_mouseDownHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import com.tallshort.tracker.events.StampSelectionEvent;
+			import com.tallshort.tracker.model.Stamp;
+			
+			protected function itemrenderer1_mouseDownHandler(event:MouseEvent):void {
+				dispatchEvent(new StampSelectionEvent(StampSelectionEvent.STAMP_SELECTED));
+			}
+			
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="normal" />
+		<s:State name="hovered" />
+		<s:State name="selected" />
+	</s:states>
+	<s:HGroup paddingLeft="5" paddingRight="5"
+			  paddingTop="5" paddingBottom="5">
+		<s:Image source="{data.location}" 
+				 alpha.normal="0.3" alpha.selected="0.8" 
+				 width="{Stamp.WIDTH/4}" height="{Stamp.HEIGHT/4}" />
+	</s:HGroup>
+</s:ItemRenderer>

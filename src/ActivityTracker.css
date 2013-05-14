@@ -1,0 +1,66 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+
+
+global
+{
+
+}
+
+
+s|ActionBar {
+	titleAlign: center;
+}
+
+.activity_list {
+	alternatingItemColors: #FFFFFF, #EEEEFF;
+}
+
+s|List {
+	selectionColor: #94D1F6;
+	contentBackgroundColor: #FFFFFF;
+	borderVisible: true;
+	borderColor: #CCCCCC;
+}
+
+.action_button {
+	color: yellow;
+}
+
+.navigation_button {
+	
+}
+
+.cellView {
+	borderColor: #CCCCCC;
+	borderVisible: true;
+	borderStyle: solid;
+	backgroundColor: yellow;
+}
+
+s|ButtonBar {
+	chromeColor: #FFFFFF;
+}
+
+.noteLabel {
+	color: #666666;
+	paddingTop: 15;
+	paddingLeft: 20;
+	paddingRight: 20;
+	paddingBottom: 15;
+}
+
+/*
+s|ActionBar {
+	chromeColor: #4a9ae2;
+}
+
+s|TabbedViewNavigator #tabBar {
+	chromeColor: #4a9ae2;
+}
+
+s|Button {
+	chromeColor: #E0F1F9;
+	color: #2390CC;
+}
+*/	

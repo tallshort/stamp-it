@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="{resourceManager.getString('LocaleString','VIEW_TITLE_EVALUATION')}"
+		xmlns:evaluation="com.tallshort.tracker.views.renderer.evaluation.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:BorderContainer backgroundImage="@Embed(source='assets/background2.png')"
+					   backgroundImageFillMode="scale"
+					   width="100%" height="100%"
+					   borderVisible="false">
+		<s:VGroup width="100%" height="100%" verticalAlign="middle" >
+				<s:List id="analysisList" width="100%" height="100%" 
+						itemRenderer="com.tallshort.tracker.views.items.AnalysisListItemIconListRender">				
+				</s:List>
+				<s:VGroup width="100%" height="50%" paddingTop="10" paddingLeft="10" paddingRight="10" paddingBottom="10" gap="10">
+					<s:Label id="acctualResult" />
+					<s:Label id="expectedResult" />
+				</s:VGroup>
+		</s:VGroup>
+	</s:BorderContainer>		
+</s:View>

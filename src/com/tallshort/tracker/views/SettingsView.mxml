@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:model="com.tallshort.tracker.model.*"
+		actionBarVisible="false"
+		title="{resourceManager.getString('LocaleString','VIEW_TITLE_SETTING')}">
+	<fx:Script>
+		<![CDATA[
+			import com.tallshort.tracker.model.Stamp;
+			import com.tallshort.tracker.service.SettingService;
+			
+			import mx.resources.ResourceManager;
+			
+			import spark.events.IndexChangeEvent;
+			
+			protected function languageSettingList_changeHandler(event:IndexChangeEvent):void
+			{
+				var localeItem:LocaleItem = languageSettingList.selectedItem as LocaleItem;
+				if (localeItem != null)
+				{
+					var selectedLocale:String = "en_US";
+					if ("zh_CN" == localeItem.name)
+					{
+						selectedLocale = "zh_CN";
+					}
+					var settingService:SettingService = new SettingService();					
+					var settingXML:XML = 
+						<setting>
+						  <locale>{selectedLocale}</locale>
+						</setting>;
+					settingService.saveSetting(settingXML);
+					resourceManager.localeChain = [selectedLocale];
+					
+				}
+			}
+		]]>
+	</fx:Script>
+	<s:BorderContainer backgroundImage="@Embed(source='assets/background2.png')"
+					   backgroundImageFillMode="scale"
+					   width="100%" height="100%"
+					   borderVisible="false">
+		<s:VGroup width="100%" height="100%" paddingTop="10" paddingLeft="10" paddingRight="10" paddingBottom="20">
+			<s:VGroup width="100%" height="100%" horizontalAlign="left">
+				<s:Label fontWeight="bold" text="{resourceManager.getString('LocaleString','LABEL_CHOOSE_LANGUAGE')}" 
+						 paddingTop="10" paddingBottom="5" />
+				<s:List id="languageSettingList" width="100%" height="100%" 
+						change="languageSettingList_changeHandler(event)" 
+						itemRenderer="com.tallshort.tracker.views.items.LanguageSettingListItemRender">
+					<s:dataProvider>
+						<s:ArrayCollection id="languageSettingListCollection">
+							<model:LocaleItem name="en_US" label="{resourceManager.getString('LocaleString','OBJECT_LANGUAGE_VALUE_EN')}" />
+							<model:LocaleItem name="zh_CN" label="{resourceManager.getString('LocaleString','OBJECT_LANGUAGE_VALUE_ZH')}" />
+						</s:ArrayCollection>
+					</s:dataProvider>
+				</s:List>
+			</s:VGroup>
+			<s:HGroup width="100%" horizontalAlign="center">
+				<s:Label id="status" paddingTop="5" paddingBottom="5" fontStyle="italic" visible="false"
+						 text="{resourceManager.getString('LocaleString','LABEL_UNSUPPORTED_CAMERAROLL')}"></s:Label>
+			</s:HGroup>
+			<s:HGroup width="100%" horizontalAlign="center">
+				<s:Button label="{resourceManager.getString('LocaleString','BUTTON_BROWSE_GALLERY')}" id="browseGallery" />
+			</s:HGroup>	
+			<s:HGroup width="100%" paddingTop="10" paddingBottom="10" horizontalAlign="center" verticalAlign="middle">
+				<s:Image id="previewImage" width="200" height="200" scaleMode="letterbox" >
+				</s:Image>
+			</s:HGroup>
+			<s:HGroup width="100%" horizontalAlign="center">
+				<s:Label id="hintLabel" width="100%" textAlign="center" paddingTop="5" paddingBottom="10" color="#666666" fontSize="18"
+						 text="{resourceManager.getString('LocaleString','LABEL_STAMP_HINT')}"></s:Label>
+			</s:HGroup>
+			<s:HGroup width="100%" horizontalAlign="center" gap="10">
+				<s:Button id="toGoodBtn" label="{resourceManager.getString('LocaleString','BUTTON_TO_GOOD')}" width="30%">
+				</s:Button>
+				<s:Button id="toBadBtn" label="{resourceManager.getString('LocaleString','BUTTON_TO_BAD')}" width="30%">
+				</s:Button>
+				<s:Button id="clearBtn" label="{resourceManager.getString('LocaleString','BUTTON_CLEAR')}" width="30%">
+				</s:Button>
+			</s:HGroup>
+		</s:VGroup>
+	</s:BorderContainer>
+</s:View>

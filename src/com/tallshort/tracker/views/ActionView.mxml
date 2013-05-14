@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:st="library://ns.tink.ws/flex/spark"
+		currentState="dayView" title="{resourceManager.getString('LocaleString','VIEW_TITLE_ACTION')}" xmlns:views="com.tallshort.tracker.views.*" tabBarVisible="false">
+	<s:states>
+		<s:State name="weekView"/>
+		<s:State name="dayView"/>
+		<s:State name="monthView"/>
+	</s:states>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.tallshort.tracker.model.*;
+			import com.tallshort.tracker.utils.DateUtil;
+			
+			import spark.components.Image;
+			
+			private function changeViewLabelFunction(item:Object):String {
+				return resourceManager.getString('LocaleString', item as String);
+			}
+			
+			public function enableOperationArea():void {
+				removeActionBtn.currentState = "enabled";
+			}
+			
+			public function disableOperationArea():void {
+				removeActionBtn.currentState = "disabled";
+			}
+			
+			public function updateUnitLabel(currentDate:Date):void {
+				if (currentState == "dayView") {
+					currentUnitLabel.text = DateUtil.dateString(currentDate);
+				} else if (currentState == "weekView") {
+					currentUnitLabel.text = DateUtil.dateString(DateUtil.getSundayInCurrentWeek(currentDate)) + " ~ " + DateUtil.dateString(DateUtil.getSaturdayInCurrentWeek(currentDate));
+				} else if (currentState == "monthView") {
+					currentUnitLabel.text = DateUtil.monthString(currentDate);
+				}
+			}
+			
+			public function newStampImage(action:Action, alpha:Number=Stamp.ALPHA):Image {
+				var stampImage:Image = new Image();
+				stampImage.alpha = alpha;
+				stampImage.width = Stamp.WIDTH;
+				stampImage.height = Stamp.HEIGHT;
+				stampImage.source = action.marker.stamp.location; 
+				return stampImage;
+			}
+			
+			public function setPosition(stampImage:Image, x:int, y:int):void {
+				stampImage.x = x - stampImage.width / 2;
+				stampImage.y = y - stampImage.height / 2;
+			}
+			
+			public function rotateStampImage(stampImage:Image, rotation:Number):void {
+				stampImage.transformAround(new Vector3D(stampImage.width/2,
+					stampImage.height/2, 0), null, new Vector3D(0, 0, rotation));
+			}
+		]]>
+	</fx:Script>
+	<s:navigationContent>
+		<s:Button id="backBtn" label="{resourceManager.getString('LocaleString','BUTTON_BACK')}" styleName="navigation_button">
+		</s:Button>
+	</s:navigationContent>
+	<s:BorderContainer backgroundImage="@Embed(source='assets/stamp_background.png')"
+					   backgroundImageFillMode="scale" borderColor="#DDDDDD" borderStyle="solid"
+					   width="100%" height="100%"
+					   borderVisible="false">
+		<s:VGroup width="100%" height="100%" paddingTop="10" paddingBottom="5">
+			<s:HGroup alpha="0.8" width="100%" horizontalAlign="center" paddingLeft="10" paddingRight="10">
+				<s:ButtonBar id="changeViewBtnBar" width="100%" selectedIndex="0" labelFunction="changeViewLabelFunction" >
+					<s:dataProvider>
+						<s:ArrayList>
+							<fx:String>DAY_VIEW</fx:String>
+							<fx:String>WEEK_VIEW</fx:String>
+							<fx:String>MONTH_VIEW</fx:String>
+						</s:ArrayList>
+					</s:dataProvider>
+				</s:ButtonBar>
+			</s:HGroup>
+			<s:HGroup alpha="0.7" width="100%" horizontalAlign="center" 
+					  paddingLeft="10" paddingRight="10" paddingTop="5" paddingBottom="5" verticalAlign="middle">
+				<s:Button id="prevUnitBtn" icon="@Embed('assets/icons/prev.png')"></s:Button>
+				<s:Label id="currentUnitLabel" fontSize.dayView="32" fontSize.monthView="32" width="100%" textAlign="center" />
+				<s:Button id="nextUnitBtn" icon="@Embed('assets/icons/next.png')"></s:Button>
+			</s:HGroup>
+			<s:HGroup id="noteArea" alpha="0.7" includeIn="dayView" width="100%" verticalAlign="middle"
+					  paddingLeft="10" paddingRight="10">
+				<s:TextInput id="noteTextArea" width="100%"></s:TextInput>
+				<s:Button id="addNoteBtn" icon="@Embed('assets/icons/post.png')" />
+			</s:HGroup>
+			<s:Group id="stampContainer" includeIn="dayView" width="100%" height="100%" depth="-1">
+				<s:layout>
+					<s:BasicLayout>
+					</s:BasicLayout>
+				</s:layout>
+				<s:BorderContainer borderVisible="false" backgroundAlpha="0" width="100%" height="100%">
+					<s:Group id="stampArea" width="100%" height="100%">
+						<s:layout>
+							<s:BasicLayout>
+							</s:BasicLayout>
+						</s:layout>
+					</s:Group>
+				</s:BorderContainer>
+				<s:Label styleName="noteLabel" id="noteLabel" width="100%" height="100%"></s:Label>
+				<s:HGroup width="100%" height="100%" paddingTop="5" paddingLeft="10" paddingRight="10">
+					<st:Rect width="100%" height="100%" radiusX="6" radiusY="6">
+						<st:stroke>
+							<st:SolidColorDash color="#CCCCCC" joints="round" caps="square"/>
+						</st:stroke>
+					</st:Rect>
+				</s:HGroup>
+			</s:Group>
+			<views:RemoveActionButton includeIn="dayView" id="removeActionBtn" width="100%">
+			</views:RemoveActionButton>
+			<s:HGroup width="100%" visible="false" includeInLayout="false" visible.dayView="true" includeInLayout.dayView="true" horizontalAlign="center">
+				<views:ChooseStampView />
+			</s:HGroup>
+			<s:HGroup visible="false" includeInLayout="false" visible.weekView="true" includeInLayout.weekView="true" width="100%" height="100%"
+					 paddingLeft="10" paddingRight="10">
+				<views:ActionWeekView id="actionWeekView" width="100%" height="100%" />
+			</s:HGroup>
+			<s:HGroup visible="false" includeInLayout="false" visible.monthView="true" includeInLayout.monthView="true" width="100%" height="100%"
+					 paddingLeft="10" paddingRight="10">
+				<views:ActionMonthView id="actionMonthView" width="100%" height="100%" />
+			</s:HGroup>
+			<s:HGroup id="busyIndicatorArea" visible="false" includeInLayout="false" width="100%" horizontalAlign="center" paddingTop="5" paddingBottom="5">
+				<s:BusyIndicator />
+			</s:HGroup>
+		</s:VGroup>
+	</s:BorderContainer>
+</s:View>

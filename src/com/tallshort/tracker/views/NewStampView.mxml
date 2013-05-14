@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="{resourceManager.getString('LocaleString','VIEW_TITLE_NEW_STAMP')}" tabBarVisible="false">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.tallshort.tracker.model.Stamp;
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:VerticalLayout paddingTop="10" paddingLeft="10" paddingRight="10" gap="10" />
+	</s:layout>
+	<s:navigationContent>
+		<s:Button label="{resourceManager.getString('LocaleString','BUTTON_BACK')}" id="backBtn" styleName="navigation_button"></s:Button>
+	</s:navigationContent>
+	<s:HGroup width="100%" horizontalAlign="center">
+		<s:Label id="status" paddingTop="5" paddingBottom="5" fontStyle="italic">			
+		</s:Label>
+	</s:HGroup>
+	<s:HGroup width="100%" horizontalAlign="center">
+		<s:Button label="{resourceManager.getString('LocaleString','BUTTON_BROWSE_GALLERY')}" id="browseGallery" />
+	</s:HGroup>	
+	<s:HGroup width="100%" height="50%" horizontalAlign="center" verticalAlign="middle">
+		<s:Image id="previewImage" width="{Stamp.WIDTH}" height="{Stamp.HEIGHT}" >
+		</s:Image>
+	</s:HGroup>
+	<s:HGroup width="100%" horizontalAlign="center" gap="10">
+		<s:Button id="toGoodBtn" label="{resourceManager.getString('LocaleString','BUTTON_TO_GOOD')}" width="30%">
+		</s:Button>
+		<s:Button id="toBadBtn" label="{resourceManager.getString('LocaleString','BUTTON_TO_BAD')}" width="30%">
+		</s:Button>
+		<s:Button id="clearBtn" label="{resourceManager.getString('LocaleString','BUTTON_CLEAR')}" width="30%">
+		</s:Button>
+	</s:HGroup>
+</s:View>

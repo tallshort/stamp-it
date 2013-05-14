@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:views="com.tallshort.tracker.views.*" currentState="loading"
+		paddingTop="5" gap="0">
+	<s:states>
+		<s:State name="loading"/>
+		<s:State name="loaded"/>
+	</s:states>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:HGroup id="busyIndicatorArea" visible.loaded="false" includeInLayout.loaded="false" width="100%" horizontalAlign="center" paddingTop="5" paddingBottom="10">
+		<s:BusyIndicator />
+	</s:HGroup>
+	<views:StampChooser id="goodStampChooser" visible.loading="false" includeInLayout.loading="false"></views:StampChooser>
+	<views:StampChooser id="badStampChooser" visible.loading="false" includeInLayout.loading="false"></views:StampChooser>
+</s:VGroup>

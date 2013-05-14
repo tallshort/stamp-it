@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  backgroundAlpha.title="0"
+		  backgroundAlpha.normal="0" 
+		  backgroundAlpha.highlighted="0.2" 
+		  backgroundAlpha.weekend="0.1"
+		  backgroundAlpha.selected="0.1" styleName="cellView"
+		  width="{Config.monthCellWidth()}" height="60" currentState="normal"
+		  backgroundColor.weekend="red"
+		  borderVisible.title="false"
+		  mouseDown="bordercontainer1_mouseDownHandler(event)"
+		  click="cellClickHandler(event)">
+	<s:states>
+		<s:State name="highlighted"/>
+		<s:State name="title"/>
+		<s:State name="weekend"/>
+		<s:State name="selected"/>
+		<s:State name="normal"/>
+	</s:states>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			
+			import com.tallshort.tracker.config.Config;
+			import com.tallshort.tracker.events.ActionViewEvent;
+			
+			[Bindable]
+			public var label:String;
+			
+			[Bindable]
+			public var date:Date;
+			
+			protected function bordercontainer1_mouseDownHandler(event:MouseEvent):void {
+				if (date != null) {
+					this.currentState = "selected";
+				}
+			}
+			
+			protected function cellClickHandler(event:MouseEvent):void {
+				if (date != null) {
+					this.dispatchEvent(new ActionViewEvent(ActionViewEvent.CELL_CLICK, date));
+				}
+			}
+		]]>
+	</fx:Script>
+	<s:VGroup width="100%" height="100%" paddingLeft="5" paddingRight="5" paddingTop="5" paddingBottom="5" verticalAlign="{date == null ? 'bottom' : 'top' }" >
+		<s:Label text="{label}" textAlign="center" width="100%" />	
+	</s:VGroup>
+</s:BorderContainer>

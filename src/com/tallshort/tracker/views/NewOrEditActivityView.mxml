@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		title="{resourceManager.getString('LocaleString','VIEW_TITLE_CREATE_ACTIVITY')}" title.edit="{resourceManager.getString('LocaleString','VIEW_TITLE_EDIT_ACTIVITY')}" tabBarVisible="false">
+	<s:states>
+		<s:State name="new"/>
+		<s:State name="edit"/>
+	</s:states>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.tallshort.tracker.model.Requirement;
+			
+			private function timesListLabelFunction(item:Object):String {
+				var times:int = item as int;
+				if (times == 1) {
+					return times + " " + resourceManager.getString('LocaleString','TIME');
+				} else {
+					return times + " " + resourceManager.getString('LocaleString','TIMES');
+				}
+			}
+			
+			private function typeListLabelFunction(item:Object):String {
+				return resourceManager.getString('LocaleString', item as String);
+			}
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:VerticalLayout paddingTop="10" paddingLeft="10" paddingRight="10" gap="10" />
+	</s:layout>
+	<s:navigationContent>
+		<s:Button label="{resourceManager.getString('LocaleString','BUTTON_BACK')}" id="backBtn" styleName="navigation_button"></s:Button>
+	</s:navigationContent>
+	<s:actionContent>
+		<s:Button styleName="action_button" id="createOrSaveActivityBtn" label="{resourceManager.getString('LocaleString','BUTTON_CREATE')}" label.edit="{resourceManager.getString('LocaleString','BUTTON_SAVE')}"/>
+	</s:actionContent>
+	<s:HGroup width="100%" verticalAlign="middle">
+		<s:Label text="{resourceManager.getString('LocaleString','LABEL_TITLE')}"/>
+		<s:TextInput width="100%" id="activityTitleInput"/>
+	</s:HGroup>
+	<s:HGroup width="100%" verticalAlign="middle">
+		<s:Label text="{resourceManager.getString('LocaleString','LABEL_DESCRIPTION')}"/>
+		<s:TextArea width="100%" height="72" id="activityDescInput"/>
+	</s:HGroup>
+	<s:Label text="{resourceManager.getString('LocaleString','LABEL_REQUIREMENT')}"/>
+	<s:HGroup verticalAlign="middle" height="100%" width="100%">
+		<s:List id="requirementTypeList" borderVisible="true" borderColor="#CCCCCC" height="100%" width="50%" dataProvider="{Requirement.TYPE_LIST}" labelFunction="typeListLabelFunction" />
+		<s:List id="requirementFrequencyList" height="100%" borderVisible="true" borderColor="#CCCCCC" width="50%" dataProvider="{Requirement.TIMES_LIST}" labelFunction="timesListLabelFunction" />
+	</s:HGroup>
+	<s:Label text="{resourceManager.getString('LocaleString','LABEL_EVALUATION')}"/>
+	<s:HGroup verticalAlign="middle" width="100%">
+		<s:ButtonBar id="evaluationBtnBar" width="100%" labelField="" iconField="icon" selectedIndex="0">
+			<s:dataProvider>
+				<s:ArrayCollection id="evaluationCollection">
+					<fx:Object name="five_stars" icon="@Embed('assets/evaluation/five_stars.png')" />
+					<fx:Object name="three_stars" icon="@Embed('assets/evaluation/three_stars.png')" />
+					<fx:Object name="thumbs" icon="@Embed('assets/evaluation/thumbs.png')" />
+					<fx:Object name="percentage" icon="@Embed('assets/evaluation/percentage.png')" />
+					<fx:Object name="count" icon="@Embed('assets/evaluation/occurence.png')" />
+				</s:ArrayCollection>
+			</s:dataProvider>
+		</s:ButtonBar>
+	</s:HGroup>
+	<s:Label text="{resourceManager.getString('LocaleString','LABEL_FLAG_TAG')}"/>
+	<s:HGroup width="100%" verticalAlign="middle" paddingBottom="10">
+		<s:ButtonBar id="flagBtnBar" width="100%" labelField="" iconField="icon" selectedIndex="0">
+			<s:dataProvider>
+				<s:ArrayCollection id="flagCollection">
+					<fx:Object name="white" icon="@Embed('assets/icons/white.png')" />
+					<fx:Object name="red" icon="@Embed('assets/icons/red.png')" />
+					<fx:Object name="green" icon="@Embed('assets/icons/green.png')" />
+					<fx:Object name="blue" icon="@Embed('assets/icons/blue.png')" />
+					<fx:Object name="yellow" icon="@Embed('assets/icons/yellow.png')" />
+					<fx:Object name="purple" icon="@Embed('assets/icons/purple.png')" />
+				</s:ArrayCollection>
+			</s:dataProvider>
+		</s:ButtonBar>
+	</s:HGroup>
+</s:View>
